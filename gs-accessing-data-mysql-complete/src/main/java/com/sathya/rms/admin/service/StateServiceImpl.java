@@ -2,6 +2,8 @@ package com.sathya.rms.admin.service;
 
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,11 @@ public class StateServiceImpl implements StateService {
 	public void deleteState(Integer id) {
 		stateRepository.deleteById(id);
 		
+	}
+
+
+	public Optional<State> getByStId(String stid) {
+		return stateRepository.findBystid(stid);
 	}
 
 }

@@ -8,6 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Transient;
+
+import com.sathya.rms.admin.entity.State;
+
 @Entity
 @Table(name="CITY")
 public class City {
@@ -18,11 +22,19 @@ public class City {
 	private String cid;
 	
 	private String cname;
-	
+	@Transient
 	private String stid;
-	//@ManyToOne
-	//@JoinColumn(name="stid")
-	//private State state;
+	@ManyToOne
+	@JoinColumn(name="st_Id")
+	private State state;
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
 
 	public String getStid() {
 		return stid;
@@ -54,8 +66,6 @@ public class City {
 
 	public void setCname(String cname) {
 		this.cname = cname;
-	}
-
-	
+	}	
 
 }

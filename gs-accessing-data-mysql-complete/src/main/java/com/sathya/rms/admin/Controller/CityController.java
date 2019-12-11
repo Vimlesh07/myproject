@@ -1,4 +1,6 @@
-package com.sathya.rms.admin.Controller;
+	package com.sathya.rms.admin.Controller;
+
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sathya.rms.admin.entity.City;
+import com.sathya.rms.admin.entity.State;
 import com.sathya.rms.admin.service.CityService;
+import com.sathya.rms.admin.service.StateService;
 
 @RestController
 @RequestMapping(path="/cities")
@@ -22,12 +26,14 @@ public class CityController {
 	
 	@Autowired
    private CityService cityService;
-	
+	@Autowired
+	private StateService stateService;
 	@GetMapping(path = "/getAllCities")
 	public	Iterable<City>	getAllCity(){
 		logger.info("get All Cities method execution started");
 		Iterable<City> result = null;
 		try {
+			
 			result = cityService.getAllCity();
 			logger.debug("result is {0}",result);
 		}
@@ -44,9 +50,12 @@ public class CityController {
 		logger.info("insertCity method execution started");
 		
 		logger.debug("input data is {0}",city);
-		
+		Optional<State> oState=stateService.getByStId(city.getStid());
 		City result= null;
 		try {
+			city.setState(oState.get());
+			if(oState.get()==null)
+				throw new Exception("invalid state id");
 			result=cityService.insertCity(city);
 			logger.debug("result is {0}",result);
 		}

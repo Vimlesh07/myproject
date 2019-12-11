@@ -20,8 +20,8 @@ public class State {
 	private String stid;
 	private String stname;
 	
-	//@OneToMany(mappedBy ="state")	
-	//private Set<City> cities;
+	@OneToMany(mappedBy ="state")	
+	private Set<City> cities;
 	
 	
 	public int getId() {
